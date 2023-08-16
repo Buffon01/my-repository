@@ -4,6 +4,8 @@
 $fCont = file_get_contents('data.txt');
 $products = json_decode($fCont, true);
 
+// Вызов значений из файла .txt
+
 if (count($_POST) > 0) {
     $product = [
         "name" => $_POST['name'],
