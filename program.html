@@ -78,24 +78,22 @@
     </tr>
     <?php
       foreach ($productsPag as $product) {
-          $name = $product['name'];
-          $price = "$" . $product['price'];
+          $price = $product['price'];
           $weight = $product['weight'];
-          $description = isset($product['description']) ? nl2br($product['description']) : '';
           $featured = isset($product['featured']) && $product['featured'] ? 'Yes' : 'No';
           $region = isset($product['region']) ? $product['region'] : '';
           $discount = isset($product['discount']) && $product['discount'] === 'with_discount' ? 'With Discount' : 'Without Discount';
           $image = isset($product['image']) ? '<img src="' . $product['image'] . '" width="100">' : '';
     ?>
       <tr>
-        <td><?php echo $name; ?></td>
-        <td><?php echo $price; ?></td>
-        <td><?php echo $weight; ?></td>
-        <td><?php echo $description; ?></td>
-        <td><?php echo $featured; ?></td>
-        <td><?php echo $region; ?></td>
-        <td><?php echo $discount; ?></td>
-        <td><?php echo $image; ?></td>
+        <td><?php echo $product['name'] ?></td>
+        <td>$<?php echo $price ?></td>
+        <td><?php echo $weight ?></td>
+        <td><?php echo nl2br($product['description']) ?></td>
+        <td><?php echo $featured ?></td>
+        <td><?php echo $region ?></td>
+        <td><?php echo $discount ?></td>
+        <td><?php echo $image ?></td>
       </tr>
     <?php
           }
@@ -120,7 +118,7 @@
 
   <form>
     <b>GET Product:</b>
-    <input type="text" name="key" value="<?php echo $s; ?>"/>
+    <input type="text" name="key" value="<?php echo $s ?>"/>
     <input type="submit" value="search"/>
   </form>
 </body>

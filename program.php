@@ -15,7 +15,7 @@ if (count($_POST) > 0) {
         "discount" => isset($_POST['discount']) ? $_POST['discount'] : 'without_discount'
     ];
 
-    // Обработка загрузки файла
+    // Загрузка файла
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $imageFileName = $_FILES['image']['name'];
         $imageFilePath = 'Images/' . $imageFileName;
@@ -88,38 +88,8 @@ if ($page > $totPages) {
 $startIndex = ($page - 1) * $quantity;
 $productsPag = (is_array($sortedPr) && $startIndex >= 0 && $startIndex < $totProd) ? array_slice($sortedPr, $startIndex, $quantity) : [];
 
-// определение максимальной длины массивов
-$maxLenName = 0;
-$maxLenPrice = strlen("Price");
-$maxLenWeight = strlen("Weight");
+// Навигация
 
-foreach ($productsPag as $product) {
-    $name = $product['name'];
-    $price = "$" . $product['price'];
-    $weight = $product['weight'];
-
-    $nameLen = strlen($name);
-    $priceLen = strlen($price);
-    $weightLen = strlen($weight);
-
-    if ($nameLen > $maxLenName) {
-        $maxLenName = $nameLen;
-    }
-    if ($priceLen > $maxLenPrice) {
-        $maxLenPrice = $priceLen;
-    }
-    if ($weightLen > $maxLenWeight) {
-        $maxLenWeight = $weightLen;
-    }
-}
-
-if ($maxLenPrice > $maxLenName) {
-    $maxLenName = $maxLenPrice;
-}
-
-if ($maxLenWeight > $maxLenName) {
-    $maxLenName = $maxLenWeight;
-}
 
 // Вывод таблицы
 include 'program.html';
