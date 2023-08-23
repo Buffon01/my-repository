@@ -1,29 +1,39 @@
 <?php
 
+class Product {
+    public $name;
+    public $price;
+    public $weight;
+    public $description;
+    public $featured;
+    public $region;
+    public $discount;
+    public $image;
+}
+
 // Вызов значений из файла .txt
 $fCont = file_get_contents('data.txt');
 $products = json_decode($fCont, true);
 
-if (count($_POST) > 0) {
-    $product = [
-        "name" => $_POST['name'],
-        "price" => $_POST['price'],
-        "weight" => $_POST['weight'],
-        "description" => $_POST['description'],
-        "featured" => isset($_POST['featured']),
-        "region" => $_POST['region'],
-        "discount" => isset($_POST['discount']) ? $_POST['discount'] : 'without_discount'
-    ];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $newProduct = new Product();
+    $newProduct->name = $_POST['name'];
+    $newProduct->price = $_POST['price'];
+    $newProduct->weight = $_POST['weight'];
+    $newProduct->description = $_POST['description'];
+    $newProduct->featured = isset($_POST['featured']);
+    $newProduct->region = $_POST['region'];
+    $newProduct->discount = isset($_POST['discount']) ? $_POST['discount'] : 'without_discount';
 
     // Загрузка файла
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $imageFileName = $_FILES['image']['name'];
         $imageFilePath = 'Images/' . $imageFileName;
         move_uploaded_file($_FILES['image']['tmp_name'], $imageFilePath);
-        $product['image'] = 'Images/' . $imageFileName;
+        $newProduct->image = 'Images/' . $imageFileName;
     }
 
-    $products[] = $product;
+    $products[] = $newProduct;
     file_put_contents('data.txt', json_encode($products));
 }
 
@@ -31,12 +41,12 @@ if (count($_POST) > 0) {
 $s = '';
 $f = $products;
 
-if (array_key_exists('key', $_GET) && strlen($_GET['key']) > 0) {
+if (isset($_GET['key']) && strlen($_GET['key']) > 0) {
     $s = $_GET['key'];
     $f = [];
 
     foreach ($products as $product) {
-        if (str_contains($product['name'], $s)) {
+        if (str_contains($product->name, $s)) {
             $f[] = $product;
         }
     }
@@ -45,25 +55,29 @@ if (array_key_exists('key', $_GET) && strlen($_GET['key']) > 0) {
 }
 
 // Сортировка для отображаемых на странице товаров
-$sort = array_key_exists('sort', $_GET) ? $_GET['sort'] : "";
+$sort = isset($_GET['sort']) ? $_GET['sort'] : "";
 
 $sortedPr = $products;
 
-if (!empty($sortedPr)) { //проверка на пустой массив
+if (!empty($sortedPr) && is_array($sortedPr)) {
     for ($i = 0; $i < count($sortedPr); $i++) {
         for ($j = 0; $j < count($sortedPr) - 1 - $i; $j++) {
-            // Sort by price:
-            if ($sort == 'up') {
-                if ((int)$sortedPr[$j]['price'] > (int)$sortedPr[$j + 1]['price']) {
-                    $t = $sortedPr[$j];
-                    $sortedPr[$j] = $sortedPr[$j + 1];
-                    $sortedPr[$j + 1] = $t;
-                }
-            } else {
-                if ((int)$sortedPr[$j]['price'] < (int)$sortedPr[$j + 1]['price']) {
-                    $t = $sortedPr[$j];
-                    $sortedPr[$j] = $sortedPr[$j + 1];
-                    $sortedPr[$j + 1] = $t;
+            if (isset($sortedPr[$j]->price) && isset($sortedPr[$j + 1]->price)) {
+                $price1 = (int)$sortedPr[$j]->price;
+                $price2 = (int)$sortedPr[$j + 1]->price;
+
+                if ($sort == 'up') {
+                    if ($price1 > $price2) {
+                        $t = $sortedPr[$j];
+                        $sortedPr[$j] = $sortedPr[$j + 1];
+                        $sortedPr[$j + 1] = $t;
+                    }
+                } else {
+                    if ($price1 < $price2) {
+                        $t = $sortedPr[$j];
+                        $sortedPr[$j] = $sortedPr[$j + 1];
+                        $sortedPr[$j + 1] = $t;
+                    }
                 }
             }
         }
@@ -72,11 +86,7 @@ if (!empty($sortedPr)) { //проверка на пустой массив
 
 // Пагинация
 $quantity = 6; // Количество элементов на странице
-$page = 1; // Текущая страница
-
-if (array_key_exists('page', $_GET) && is_numeric($_GET['page'])) {
-    $page = max(1, intval($_GET['page']));
-}
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 
 $totProd = count($sortedPr) ?: 0;
 $totPages = ceil($totProd / $quantity);
@@ -88,14 +98,16 @@ if ($page > $totPages) {
 $startIndex = ($page - 1) * $quantity;
 $productsPag = (is_array($sortedPr) && $startIndex >= 0 && $startIndex < $totProd) ? array_slice($sortedPr, $startIndex, $quantity) : [];
 
-// Навигация
-
-
 // Вывод таблицы
 include 'program.html';
 
 // Вычисление общей стоимости товаров
-$totalPr = array_sum(array_column($productsPag, 'price'));
+$totalPr = 0;
+foreach ($productsPag as $product) {
+    if (isset($product->price) && is_numeric($product->price)) {
+        $totalPr += $product->price;
+    }
+}
 echo "Total Price: $" . $totalPr;
 
 ?>
