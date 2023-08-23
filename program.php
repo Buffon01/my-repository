@@ -1,22 +1,33 @@
 <?php
 
-class Product {
-    public $name;
-    public $price;
-    public $weight;
-    public $description;
-    public $featured;
-    public $region;
-    public $discount;
-    public $image;
+include 'product.php';
+
+//Вызов значений из файла .txt
+$fCont = file_get_contents('data.txt');
+$productsData = unserialize($fCont);
+if ($productsData === false) {
+    $productsData = []; // если данных нет
 }
 
-// Вызов значений из файла .txt
-$fCont = file_get_contents('data.txt');
-$products = json_decode($fCont, true);
+// Преобразование данных в объекты
 
+$products = [];
+foreach ($productsData as $productData) {
+    $product = new product();
+    $product->name = $productData->name;
+    $product->price = $productData->price;
+    $product->weight = $productData->weight;
+    $product->description = $productData->description;
+    $product->featured = $productData->featured;
+    $product->region = $productData->region;
+    $product->discount = $productData->discount;
+    $product->image = $productData->image;
+    $products[] = $product;
+}
+
+//Запись данных в файл
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = new Product();
+    $newProduct = new product();
     $newProduct->name = $_POST['name'];
     $newProduct->price = $_POST['price'];
     $newProduct->weight = $_POST['weight'];
@@ -34,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $products[] = $newProduct;
-    file_put_contents('data.txt', json_encode($products));
+    $serializedData = serialize($products);
+    file_put_contents('data.txt', $serializedData);
 }
 
 // Определение значения по ключу
