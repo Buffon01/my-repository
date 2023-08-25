@@ -16,6 +16,7 @@ $productsData = [
         "description" => "Black Dick",
         "featured" => true,
         "region" => "Europe",
+        "city" => "Paris",
         "discount" => "with_discount",
         "image" => " ",
     ],
@@ -32,6 +33,7 @@ foreach ($productsData as $productData) {
     $product->region = $productData["region"];
     $product->discount = $productData["discount"];
     $product->image = $productData["image"];
+    $product->city = $productData["city"];
     $products[] = $product;
 }
     $serializedData = serialize($products);

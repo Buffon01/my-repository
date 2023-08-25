@@ -37,6 +37,11 @@
 
 <div style="margin-top: 10px;"></div>
 
+      <label>City:</label>
+      <input name="city" type="text" placeholder="City" required/><br>
+
+<div style="margin-top: 10px;"></div>
+
         <label class="discount-label">
             Discount:
             <input type="radio" name="discount" value="with_discount"> With Discount
@@ -69,12 +74,12 @@
           }
         ?>
       </th>
-      <th>Weight</th>
-      <th>Description</th>
-      <th>Featured</th>
-      <th>Region</th>
-      <th>Discount</th>
-      <th>Image</th>
+        <th>Weight</th>
+        <th>Description</th>
+        <th>Featured</th>
+        <th>Location</th>
+        <th>Discount</th>
+        <th>Image</th>
     </tr>
     <?php
        foreach ($productsPag as $product) {
@@ -84,17 +89,18 @@
           $region = $product->region;
           $discount = $product->discount === 'with_discount' ? 'With Discount' : 'Without Discount';
           $image = $product->image ? '<img src="' . $product->image . '" width="100">' : '';
+          $location = $product->getLocation();
 
       ?>
       <tr>
-          <td><?php echo $product->name ?></td>
-          <td>$<?php echo $price ?></td>
-          <td><?php echo $weight ?></td>
-          <td><?php echo nl2br($product->description) ?></td>
-          <td><?php echo $featured ?></td>
-          <td><?php echo $region ?></td>
-          <td><?php echo $discount ?></td>
-          <td><?php echo $image ?></td>
+          <td><?php echo $product->getName() ?></td>
+          <td>$<?php echo $product->getPrice() ?></td>
+          <td><?php echo $product->getWeight() ?></td>
+          <td><?php echo nl2br($product->getDescription()) ?></td>
+          <td><?php echo $product->isFeatured() ? 'Yes' : 'No' ?></td>
+          <td><?php echo $product->getLocation() ?></td>
+          <td><?php echo $product->getDiscount() ?></td>
+          <td><?php echo $product->getImageHTML() ?></td>
       </tr>
     <?php
           }

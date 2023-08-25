@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newProduct->description = $_POST['description'];
     $newProduct->featured = isset($_POST['featured']);
     $newProduct->region = $_POST['region'];
+    $newProduct->city = $_POST['city'];
     $newProduct->discount = isset($_POST['discount']) ? $_POST['discount'] : 'without_discount';
 
     // Загрузка файла
