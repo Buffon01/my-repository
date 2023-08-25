@@ -10,7 +10,6 @@ if ($productsData === false) {
 }
 
 //Запись данных в файл
-$products = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newProduct = new Product();
     $newProduct->name = $_POST['name'];
@@ -30,20 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newProduct->image = 'Images/' . $imageFileName;
     }
 
-    $products[] = $newProduct;
-    $serializedData = serialize($products);
+    $productsData[] = $newProduct;
+    $serializedData = serialize($productsData);
     file_put_contents('data.txt', $serializedData);
 }
 
 // Определение значения по ключу
 $s = '';
-$f = $products;
+$f = $productsData;
 
 if (isset($_GET['key']) && strlen($_GET['key']) > 0) {
     $s = $_GET['key'];
     $f = [];
 
-    foreach ($products as $product) {
+    foreach ($productsData as $product) {
         if (str_contains($product->name, $s)) {
             $f[] = $product;
         }
@@ -55,7 +54,7 @@ if (isset($_GET['key']) && strlen($_GET['key']) > 0) {
 // Сортировка для отображаемых на странице товаров
 $sort = isset($_GET['sort']) ? $_GET['sort'] : "";
 
-$sortedPr = $products;
+$sortedPr = $productsData;
 
 if (!empty($sortedPr) && is_array($sortedPr)) {
     for ($i = 0; $i < count($sortedPr); $i++) {

@@ -18,7 +18,7 @@ $productsData = [
         "region" => "Europe",
         "city" => "Paris",
         "discount" => "with_discount",
-        "image" => " ",
+        "image" => null,
     ],
 ];
 
