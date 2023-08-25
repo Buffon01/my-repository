@@ -23,7 +23,7 @@ $productsData = [
 
 $products = [];
 foreach ($productsData as $productData) {
-    $product = new product();
+    $product = new Product();
     $product->name = $productData["name"];
     $product->price = $productData["price"];
     $product->weight = $productData["weight"];

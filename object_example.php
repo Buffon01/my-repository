@@ -3,13 +3,13 @@
 // В новой программе опиши класс любой структуры (продукт, пользователь, животное, геометрическая фигура, ...).
 // Создай три экземпляра этого класса, и выведи информацию каждого из них.
 
-class product {
+class Product {
     public $name;
     public $weight;
     public $price;
 }
 
-$egg = new product;
+$egg = new Product;
 $egg->name = 'Egg';
 $egg->price = 23;
 $egg->weight = 1;

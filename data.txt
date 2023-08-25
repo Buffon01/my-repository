@@ -1,1 +1,1 @@
-a:1:{i:0;O:7:"product":8:{s:4:"name";s:4:"Dick";s:5:"price";i:100;s:6:"weight";i:33;s:11:"description";s:10:"Black Dick";s:8:"featured";b:1;s:6:"region";s:6:"Europe";s:8:"discount";s:13:"with_discount";s:5:"image";s:1:" ";}}
+a:1:{i:0;O:7:"Product":8:{s:4:"name";s:15:"Andrii Kostenko";s:5:"price";s:2:"44";s:6:"weight";s:2:"44";s:11:"description";s:2:"44";s:8:"featured";b:1;s:6:"region";s:6:"Europe";s:8:"discount";s:16:"without_discount";s:5:"image";N;}}

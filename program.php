@@ -9,25 +9,10 @@ if ($productsData === false) {
     $productsData = []; // если данных нет
 }
 
-// Преобразование данных в объекты
-
-$products = [];
-foreach ($productsData as $productData) {
-    $product = new product();
-    $product->name = $productData->name;
-    $product->price = $productData->price;
-    $product->weight = $productData->weight;
-    $product->description = $productData->description;
-    $product->featured = $productData->featured;
-    $product->region = $productData->region;
-    $product->discount = $productData->discount;
-    $product->image = $productData->image;
-    $products[] = $product;
-}
-
 //Запись данных в файл
+$products = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = new product();
+    $newProduct = new Product();
     $newProduct->name = $_POST['name'];
     $newProduct->price = $_POST['price'];
     $newProduct->weight = $_POST['weight'];
