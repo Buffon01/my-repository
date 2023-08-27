@@ -48,8 +48,8 @@ class Product {
         return $this->discount === 'with_discount' ? 'With Discount' : 'Without Discount';
     }
 
-    public function getImageHTML(): string {
-        return $this->image ? '<img src="' . $this->image . '" width="100">' : '';
+    public function getImagePath(): ?string {
+        return $this->image;
     }
 }
 

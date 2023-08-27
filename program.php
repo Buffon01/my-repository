@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newProduct->discount = isset($_POST['discount']) ? $_POST['discount'] : 'without_discount';
 
     // Загрузка файла
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    if (UPLOAD_ERR_OK === $_FILES['image']['error']) {
         $imageFileName = $_FILES['image']['name'];
         $imageFilePath = 'Images/' . $imageFileName;
         move_uploaded_file($_FILES['image']['tmp_name'], $imageFilePath);
@@ -101,9 +101,7 @@ include 'program.html';
 // Вычисление общей стоимости товаров
 $totalPr = 0;
 foreach ($productsPag as $product) {
-    if (isset($product->price) && is_numeric($product->price)) {
         $totalPr += $product->price;
-    }
 }
 echo "Total Price: $" . $totalPr;
 
