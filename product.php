@@ -11,8 +11,19 @@ class Product {
     public $image;
     public $city;
 
-    public function getLocation(): string
-    {
+    public function __construct($name, $price, $weight, $description, $featured, $region, $discount, $image, $city) {
+        $this->name = $name;
+        $this->price = $price;
+        $this->weight = $weight;
+        $this->description = $description;
+        $this->featured = $featured;
+        $this->region = $region;
+        $this->discount = $discount;
+        $this->image = $image;
+        $this->city = $city;
+    }
+
+    public function getLocation(): string {
         return $this->region . ', ' . $this->city;
     }
 
@@ -51,6 +62,11 @@ class Product {
     public function getImagePath(): ?string {
         return $this->image;
     }
+
+    public function __toString(): string {
+        return $this->name;
+    }
 }
+
 
 
