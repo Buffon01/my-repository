@@ -11,23 +11,17 @@ if ($productsData === false) {
 
 //Запись данных в файл
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = new Product();
-    $newProduct->name = $_POST['name'];
-    $newProduct->price = $_POST['price'];
-    $newProduct->weight = $_POST['weight'];
-    $newProduct->description = $_POST['description'];
-    $newProduct->featured = isset($_POST['featured']);
-    $newProduct->region = $_POST['region'];
-    $newProduct->city = $_POST['city'];
-    $newProduct->discount = isset($_POST['discount']) ? $_POST['discount'] : 'without_discount';
-
-    // Загрузка файла
-    if (UPLOAD_ERR_OK === $_FILES['image']['error']) {
-        $imageFileName = $_FILES['image']['name'];
-        $imageFilePath = 'Images/' . $imageFileName;
-        move_uploaded_file($_FILES['image']['tmp_name'], $imageFilePath);
-        $newProduct->image = 'Images/' . $imageFileName;
-    }
+    $newProduct = new Product(
+        $_POST['name'],
+        $_POST['price'],
+        $_POST['weight'],
+        $_POST['description'],
+        isset($_POST['featured']),
+        $_POST['region'],
+        isset($_POST['discount']) ? $_POST['discount'] : 'without_discount',
+        isset($_FILES['image']['name']) ? 'Images/' . $_FILES['image']['name'] : null,
+        $_POST['city']
+    );
 
     $productsData[] = $newProduct;
     $serializedData = serialize($productsData);

@@ -24,16 +24,17 @@ $productsData = [
 
 $products = [];
 foreach ($productsData as $productData) {
-    $product = new Product();
-    $product->name = $productData["name"];
-    $product->price = $productData["price"];
-    $product->weight = $productData["weight"];
-    $product->description = $productData["description"];
-    $product->featured = $productData["featured"];
-    $product->region = $productData["region"];
-    $product->discount = $productData["discount"];
-    $product->image = $productData["image"];
-    $product->city = $productData["city"];
+    $product = new Product(
+        $productData["name"],
+        $productData["price"],
+        $productData["weight"],
+        $productData["description"],
+        $productData["featured"],
+        $productData["region"],
+        $productData["discount"],
+        $productData["image"],
+        $productData["city"]
+    );
     $products[] = $product;
 }
     $serializedData = serialize($products);
