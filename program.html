@@ -9,6 +9,10 @@
 </head>
 <body>
 <!--  <div class="form-container">-->
+<div style="text-align: right;">
+    <a href="cart.php">Show Cart</a>
+</div>
+
   <form method="post" enctype="multipart/form-data">
     <b>POST Product:</b><br>
     <input name="name" type="text" placeholder="Name" required/><br>
@@ -80,6 +84,7 @@
         <th>Location</th>
         <th>Discount</th>
         <th>Image</th>
+        <th>Add to Cart</th>
     </tr>
     <?php
        foreach ($productsPag as $product) {
@@ -101,8 +106,8 @@
           <td><?php echo $product->getLocation() ?></td>
           <td><?php echo $product->getDiscount() ?></td>
           <td><?php echo $image ?></td>
-      </tr>
-    <?php
+          <td><a href="add_to_cart.php?name=<?php echo $product; ?>&price=<?php echo $product->getPrice(); ?>">Add to Cart</a></td>
+          <?php
           }
           ?>
   </table>

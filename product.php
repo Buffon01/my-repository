@@ -11,7 +11,7 @@ class Product {
     public $image;
     public $city;
 
-    public function __construct($name, $price, $weight, $description, $featured, $region, $discount, $image, $city) {
+    public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
         $this->name = $name;
         $this->price = $price;
         $this->weight = $weight;

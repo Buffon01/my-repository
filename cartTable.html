@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Table</title>
+  <link rel="stylesheet" href="program.css">
+</head>
+<body>
+<h1>Shopping Cart</h1>
+
+<!-- Добавил ссылку для возврата на главную страницу -->
+<a href="program.php">Back to Product List</a>
+
+<div style="margin-top: 10px;"></div>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Remove from Cart</th>
+  </tr>
+  <?php
+if (isset($cart) && is_array($cart)) {
+    foreach ($cart as $product) {
+?>
+  <tr>
+    <td><?php echo $product->getName() ?></td>
+    <td>$<?php echo $product->getPrice() ?></td>
+    <td><a href="?remove_from_cart=<?php echo $product->getName(); ?>">Remove from Cart</a></td>
+  </tr>
+  <?php
+    }
+}
+  ?>
+</table>
+
+<!-- Вывод общей стоимости товаров в корзине -->
+<p>Total Price in Cart: $<?php echo $totalPr; ?></p>
+</body>
+</html>

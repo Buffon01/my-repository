@@ -28,6 +28,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents('data.txt', $serializedData);
 }
 
+// Добавляем товар в корзину
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['add_to_cart'])) {
+    $productId = $_GET['add_to_cart'];
+
+    // Находим товар по его имени
+    foreach ($productsData as $product) {
+        if ($product->getName() === $productId) {
+            $cart[] = $product; // Добавляем товар в корзину
+            break; // Нет необходимости продолжать поиск
+        }
+    }
+
+    // Сохраняем обновленную корзину в cart.txt
+    $cartFileContents = serialize($cart);
+    file_put_contents('cart.txt', $cartFileContents);
+}
+
+
 // Определение значения по ключу
 $s = '';
 $f = $productsData;
