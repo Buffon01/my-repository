@@ -19,6 +19,7 @@
   <tr>
     <th>Name</th>
     <th>Price</th>
+    <th>Quantity</th>
     <th>Remove from Cart</th>
   </tr>
   <?php
@@ -28,7 +29,8 @@ if (isset($cart) && is_array($cart)) {
   <tr>
     <td><?php echo $product->getName() ?></td>
     <td>$<?php echo $product->getPrice() ?></td>
-    <td><a href="?remove_from_cart=<?php echo $product->getName(); ?>">Remove from Cart</a></td>
+    <td>1</td>
+    <td><a href="remove_from_cart.php?remove_from_cart=<?php echo $product->getName(); ?>">Remove from Cart</a></td>
   </tr>
   <?php
     }

@@ -115,6 +115,6 @@ $totalPr = 0;
 foreach ($productsPag as $product) {
         $totalPr += $product->price;
 }
-echo "Total Price: $" . $totalPr;
+echo "Total Price: $" . Product::$totalPrice;
 
 ?>

@@ -11,6 +11,8 @@ class Product {
     public $image;
     public $city;
 
+    public static $totalPrice = 0;
+
     public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
         $this->name = $name;
         $this->price = $price;
@@ -21,6 +23,8 @@ class Product {
         $this->discount = $discount;
         $this->image = $image;
         $this->city = $city;
+
+        self::$totalPrice += $this->price;
     }
 
     public function getLocation(): string {
