@@ -12,7 +12,7 @@ if ($productsData === false) {
 
 //Запись данных в файл
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = new Classes\Product(
+    $newProduct = Product::create(
         $_POST['name'],
         $_POST['price'],
         $_POST['weight'],
@@ -113,9 +113,15 @@ include 'program.html';
 
 // Вычисление общей стоимости товаров
 $totalPr = 0;
-foreach ($productsPag as $product) {
+if (Product::$totalPrice === null) {
+    foreach ($productsPag as $product) {
         $totalPr += $product->price;
+    }
+    Product::$totalPrice = $totalPr;
+} else {
+    $totalPr = Product::$totalPrice;
 }
-echo "Total Price: $" . Product::$totalPrice;
+
+echo "Total Price: $" . $totalPr;
 
 ?>

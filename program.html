@@ -88,7 +88,7 @@
     </tr>
     <?php
        foreach ($productsPag as $product) {
-          $price = $product->price;
+          $price = $product->getPrice();
           $weight = $product->weight;
           $featured = $product->featured ? 'Yes' : 'No';
           $region = $product->region;

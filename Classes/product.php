@@ -2,8 +2,8 @@
 
 namespace Classes;
 class Product {
+    private $price;
     public $name;
-    public $price;
     public $weight;
     public $description;
     public $featured;
@@ -16,7 +16,7 @@ class Product {
 
     public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
         $this->name = $name;
-        $this->price = $price;
+        $this->setPrice($price);;
         $this->weight = $weight;
         $this->description = $description;
         $this->featured = $featured;
@@ -25,7 +25,14 @@ class Product {
         $this->image = $image;
         $this->city = $city;
 
-        self::$totalPrice += $this->price;
+    }
+
+    public static function create($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
+        return new self($name, $price, $weight, $description, $featured, $region, $discount, $image, $city);
+    }
+
+    public function setPrice($price) {
+        $this->price = $price;
     }
 
     public function getLocation(): string {
@@ -70,6 +77,14 @@ class Product {
 
     public function __toString(): string {
         return $this->name . ' FORZA JUVE !!!';
+    }
+
+    public function __wakeup() {
+        if (!isset(self::$totalPrice)) {
+            self::$totalPrice = 0;
+        }
+
+        self::$totalPrice += $this->price;
     }
 }
 
