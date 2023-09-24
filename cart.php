@@ -1,5 +1,6 @@
 <?php
-include 'product.php';
+
+include 'Classes/product.php';
 
 // Загрузка данных товаров из data.txt
 $dataFileContents = file_get_contents('data.txt');
@@ -20,6 +21,7 @@ if ($cartFileContents !== false) {
 }
 
 // Вычисление общей стоимости
+
 $totalPr = 0;
 foreach ($cart as $product) {
     $totalPr += $product->getPrice();

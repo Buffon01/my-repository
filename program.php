@@ -1,6 +1,7 @@
 <?php
 
-include 'product.php';
+use Classes\Product;
+include 'Classes/product.php';
 
 //Вызов значений из файла .txt
 $fCont = file_get_contents('data.txt');
@@ -11,7 +12,7 @@ if ($productsData === false) {
 
 //Запись данных в файл
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = new Product(
+    $newProduct = new Classes\Product(
         $_POST['name'],
         $_POST['price'],
         $_POST['weight'],

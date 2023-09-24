@@ -1,6 +1,6 @@
 <?php
 
-include 'product.php';
+include 'Classes/product.php';
 
 $file = 'data.txt';
 file_put_contents($file, '');
@@ -24,7 +24,7 @@ $productsData = [
 
 $products = [];
 foreach ($productsData as $productData) {
-    $product = new Product(
+    $product = new Classes\Product(
         $productData["name"],
         $productData["price"],
         $productData["weight"],

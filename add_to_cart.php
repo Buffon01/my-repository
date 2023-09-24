@@ -6,14 +6,14 @@ if ($cart === false) {
     $cart = [];
 }
 
-//
+// Подключаем определение класса Product
+include 'Classes/product.php';
+
 $productId = $_GET['name'] ?? '';
 $productPrice = $_GET['price'] ?? '';
 
-// объект Product
-include 'product.php';
-$product = new Product($productId, $productPrice, );
-
+// Создаем объект Product
+$product = new Classes\Product($productId, $productPrice);
 
 $cart[] = $product;
 
