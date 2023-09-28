@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['add_to_cart'])) {
     foreach ($productsData as $product) {
         if ($product->getName() === $productId) {
             $cart[] = $product; // Добавляем товар в корзину
-            break; // Нет необходимости продолжать поиск
+            break;
         }
     }
 
@@ -115,16 +115,8 @@ $productsPag = (is_array($sortedPr) && $startIndex >= 0 && $startIndex < $totPro
 include 'program.html';
 
 // Вычисление общей стоимости товаров
-$totalPr = 0;
-if (Product::$totalPrice === null) {
-    foreach ($productsPag as $product) {
-        $totalPr += $product->price;
-    }
-    Product::$totalPrice = $totalPr;
-} else {
-    $totalPr = Product::$totalPrice;
-}
+$totalPrice = Product::getTotalPrice(); // Получение общей стоимости
 
-echo "Total Price: $" . $totalPr;
+echo "Total Price: $" . $totalPrice;
 
 ?>

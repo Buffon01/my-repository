@@ -11,8 +11,8 @@ class Product {
     public $discount;
     public $image;
     public $city;
+    private static $totalPrice = 0;
 
-    public static $totalPrice = 0;
 
     public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
         $this->name = $name;
@@ -85,6 +85,14 @@ class Product {
         }
 
         self::$totalPrice += $this->price;
+    }
+
+    public static function setTotalPrice($totalPrice) {
+        self::$totalPrice = $totalPrice;
+    }
+
+    public static function getTotalPrice() {
+        return self::$totalPrice;
     }
 }
 
