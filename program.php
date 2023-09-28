@@ -1,7 +1,10 @@
 <?php
 
+spl_autoload_register(function ($class) {
+    include $class . '.php';
+});
+
 use Classes\Product;
-include 'Classes/product.php';
 
 //Вызов значений из файла .txt
 $fCont = file_get_contents('data.txt');

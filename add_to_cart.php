@@ -7,7 +7,7 @@ if ($cart === false) {
 }
 
 // Подключаем определение класса Product
-include 'Classes/product.php';
+//include 'Classes/Product.php';
 
 $productId = $_GET['name'] ?? '';
 $productPrice = $_GET['price'] ?? '';

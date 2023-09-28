@@ -1,6 +1,6 @@
 <?php
 
-include 'Classes/product.php';
+//include 'Classes/Product.php';
 
 // Загрузка данных товаров из data.txt
 $dataFileContents = file_get_contents('data.txt');

@@ -1,6 +1,6 @@
 <?php
 
-include 'Classes/product.php';
+include 'Classes/Product.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['remove_from_cart'])) {
     // Загрузка корзины из cart.txt

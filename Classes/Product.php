@@ -2,7 +2,7 @@
 
 namespace Classes;
 class Product {
-    private $price;
+    public $price;
     public $name;
     public $weight;
     public $description;
