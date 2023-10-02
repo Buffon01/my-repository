@@ -1,23 +1,34 @@
 <?php
 
-$cartFileContents = file_get_contents('cart.txt');
-$cart = unserialize($cartFileContents);
-if ($cart === false) {
-    $cart = [];
-}
+spl_autoload_register(function ($class) {
+    include $class . '.php';
+});
 
-// Подключаем определение класса Product
-//include 'Classes/Product.php';
+use Classes\ShoppingCart;
+use Classes\Product;
+
+$cart = new ShoppingCart();
 
 $productId = $_GET['name'] ?? '';
-$productPrice = $_GET['price'] ?? '';
+$productPrice = $_GET['price'] ?? 0;
 
-// Создаем объект Product
-$product = new Classes\Product($productId, $productPrice);
+// Проверяем, есть ли товар с таким именем уже в корзине
+$itemExists = false;
+foreach ($cart->items as &$item) {
+    if ($item['name'] == $productId) {
+        $item['quantity']++; // Увеличиваем количество
+        $itemExists = true;
+        break;
+    }
+}
 
-$cart[] = $product;
+if (!$itemExists) {
+    // Если товара с таким именем нет в корзине, добавляем его
+    $cart->addItem(new Product($productId, $productPrice), 1);
+}
 
-$cartFileContents = serialize($cart);
+// После обновления корзины, сохраняем ее в файл
+$cartFileContents = serialize($cart->items);
 file_put_contents('cart.txt', $cartFileContents);
 
 header("Location: /program.php");

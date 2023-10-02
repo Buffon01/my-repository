@@ -11,7 +11,8 @@ class Product {
     public $discount;
     public $image;
     public $city;
-    private static $totalPrice = 0;
+    private $totalPrice = 0;
+    private $quantity = 0;
 
 
     public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
@@ -24,11 +25,24 @@ class Product {
         $this->discount = $discount;
         $this->image = $image;
         $this->city = $city;
+        $this->totalPrice = $this->price;
 
     }
 
     public static function create($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
         return new self($name, $price, $weight, $description, $featured, $region, $discount, $image, $city);
+    }
+
+    public function getQuantity(): int {
+        return $this->quantity;
+    }
+
+    public function addQuantity(): void {
+        $this->quantity = ++$this->quantity;
+    }
+
+    public function removeQuantity(): void {
+        $this->quantity = --$this->quantity;
     }
 
     public function setPrice($price) {
@@ -76,23 +90,25 @@ class Product {
     }
 
     public function __toString(): string {
-        return $this->name . ' FORZA JUVE !!!';
+        return $this->name;
     }
 
     public function __wakeup() {
-        if (!isset(self::$totalPrice)) {
-            self::$totalPrice = 0;
+        if (!isset($this->totalPrice)) {
+            $this->totalPrice = 0;
         }
 
-        self::$totalPrice += $this->price;
+        $this->totalPrice += $this->price;
     }
 
-    public static function setTotalPrice($totalPrice) {
-        self::$totalPrice = $totalPrice;
+    public function setTotalPrice($totalPrice): void
+    {
+        $this->totalPrice = $this->totalPrice + $totalPrice;
     }
 
-    public static function getTotalPrice() {
-        return self::$totalPrice;
+    public function getTotalPrice(): int
+    {
+        return $this->totalPrice;
     }
 }
 

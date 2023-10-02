@@ -114,6 +114,7 @@ $productsPag = (is_array($sortedPr) && $startIndex >= 0 && $startIndex < $totPro
 // Вывод таблицы
 include 'program.html';
 
+
 // Вычисление общей стоимости товаров
 $totalPrice = Product::getTotalPrice(); // Получение общей стоимости
 

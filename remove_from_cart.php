@@ -1,6 +1,8 @@
 <?php
 
-include 'Classes/Product.php';
+spl_autoload_register(function ($class) {
+    include $class . '.php';
+});
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['remove_from_cart'])) {
     // Загрузка корзины из cart.txt
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['remove_from_cart'])) {
 
     foreach ($cart as $key => $product) {
         if ($product->getName() === $productId) {
-            unset($cart[$key]);
+            $cart[$productId]->removeQuantity();
             break;
         }
     }

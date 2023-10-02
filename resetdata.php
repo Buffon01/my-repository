@@ -1,9 +1,9 @@
 <?php
 
-//spl_autoload_register(function ($class){
-//    include 'Classes/' . $class . '.php';
-//});
-//include 'Classes/Product.php';
+spl_autoload_register(function ($class) {
+    include $class . '.php';
+});
+
 
 $file = 'data.txt';
 file_put_contents($file, '');
