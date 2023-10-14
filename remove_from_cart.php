@@ -1,8 +1,6 @@
 <?php
 
-spl_autoload_register(function ($class) {
-    include $class . '.php';
-});
+include 'autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['remove_from_cart'])) {
     // Загрузка корзины из cart.txt

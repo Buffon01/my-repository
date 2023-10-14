@@ -1,9 +1,6 @@
 <?php
 
-spl_autoload_register(function ($class) {
-    include $class . '.php';
-});
-
+include 'autoload.php';
 
 $file = 'data.txt';
 file_put_contents($file, '');
