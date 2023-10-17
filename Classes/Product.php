@@ -58,7 +58,7 @@ class Product {
     }
 
     public function getPrice(): float {
-        return $this->price;
+        return floatval($this->price);
     }
 
     public function getWeight(): float {
@@ -106,11 +106,13 @@ class Product {
         $this->totalPrice = $this->totalPrice + $totalPrice;
     }
 
-    public function getTotalPrice(): int
+    public function getTotalPrice()
     {
-        return $this->totalPrice;
+        global $totalPrice;
+        if (empty($this->cart)) {
+            return 0;
+        }
+
+        return $totalPrice;
     }
 }
-
-
-
