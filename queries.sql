@@ -11,3 +11,11 @@ ORDER BY weight
 
 6. SELECT * FROM product WHERE price = (SELECT MAX(price) FROM product)
 
+
+
+
+INSERT INTO product (name, price, weight, description)
+VALUES
+      ('nedved', 25, 33, NULL),
+      ("666", 123, 44, '55'),
+      (6668, 999, 55, NULL);
