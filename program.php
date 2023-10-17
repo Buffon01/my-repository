@@ -12,27 +12,32 @@ $statement = $pdo->query($query);
 $productsData = [];
 
 foreach ($statement as $row) {
-    $product = new Product($row['id'], $row['name'], $row['price'], $row['weight'], $row['description'], $row['featured'], $row['location'], $row['discount'], $row['image'], $row['add to cart']);
+    $product = new Product($row['id'], $row['name'], $row['price'], $row['weight'], $row['description'], $row['featured'], $row['location'], $row['discount'], $row['image'], $row['addtocart']);
     $productsData[] = $product;
 }
 
-//Запись данных в файл
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newProduct = Product::create(
-        $_POST['name'],
-        $_POST['price'],
-        $_POST['weight'],
-        $_POST['description'],
-        isset($_POST['featured']),
-        $_POST['region'],
-        isset($_POST['discount']) ? $_POST['discount'] : 'without_discount',
-        isset($_FILES['image']['name']) ? 'Images/' . $_FILES['image']['name'] : null,
-        $_POST['city']
-    );
+//Вставка данных
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name']) && isset($_POST['price']) && isset($_POST['weight']) && isset($_POST['description']) && isset($_POST['region']) && isset($_POST['city'])) {
+    $insertQuery = "INSERT INTO product (`id`,`name`, `price`, `weight`, `description`, `featured`, `location`, `discount`, `image`, `addtocart`) 
+                    VALUES (null, :name, :price, :weight, :description, :featured, :location, :discount, :image, :addtocart)";
 
-    $productsData[] = $newProduct;
-    $serializedData = serialize($productsData);
-    file_put_contents('data.txt', $serializedData);
+    $stmt = $pdo->prepare($insertQuery);
+
+    $stmt->bindValue(':id', null);
+    $stmt->bindValue(':name', $_POST['name']);
+    $stmt->bindValue(':price', $_POST['price']);
+    $stmt->bindValue(':weight', $_POST['weight']);
+    $stmt->bindValue(':description', $_POST['description']);
+    $stmt->bindValue(':featured', isset($_POST['featured']));
+    $stmt->bindValue(':location', $_POST['region']);
+    $stmt->bindValue(':discount', isset($_POST['discount']) ? $_POST['discount'] : 'without_discount');
+    $stmt->bindValue(':image', isset($_FILES['image']['name']) ? 'Images/' . $_FILES['image']['name'] : null);
+    $stmt->bindValue(':addtocart', $_POST['city']);
+
+    $stmt->execute();
+
+    header('Location: program.php');
+    exit();
 }
 
 // Добавляем товар в корзину

@@ -69,7 +69,7 @@ class Product {
         return $this->description;
     }
 
-    public function isFeatured(): bool {
+    public function isFeatured() {
         return $this->featured;
     }
 
