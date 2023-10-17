@@ -6,7 +6,8 @@ include 'autoload.php';
 use Classes\Product;
 
 // Запрос для получения данных
-$query = "SELECT * FROM product ORDER BY price ASC";
+$n = $_GET['keyword'];
+$query = "SELECT * FROM product WHERE name = '" . $n . "' ORDER BY price ASC LIMIT 4";
 $statement = $pdo->query($query);
 
 $productsData = [];
