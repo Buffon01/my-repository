@@ -13,9 +13,10 @@ class Product {
     public $city;
     private $totalPrice = 0;
     private $quantity = 0;
+    private $id;
 
-
-    public function __construct($name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
+    public function __construct($id = null, $name = null, $price = null, $weight = null, $description = null, $featured = null, $region = null, $discount = null, $image = null, $city = null) {
+        $this->id = $id;
         $this->name = $name;
         $this->setPrice($price);;
         $this->weight = $weight;
@@ -65,7 +66,10 @@ class Product {
         return $this->weight;
     }
 
-    public function getDescription(): string {
+    /**
+     * @burm тут дескрипшен возвращается NULL из базы, поэтому аннтация string не верная, меняем на ?string
+     */
+    public function getDescription(): ?string {
         return $this->description;
     }
 
